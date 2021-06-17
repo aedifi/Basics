@@ -1,0 +1,29 @@
+-- motd.lua
+-- Handles the message of the day and /motd command.
+
+local MOTD = {}
+
+function LoadMOTD()
+	-- Check if the file 'motd.txt' exists, if not, create it with default content:
+	if not cFile:IsFile("motd.txt") then
+		CreateFile = io.open("motd.txt", "w")
+		CreateFile:write("@7Welcome to the architecture platform.")
+		CreateFile:close()
+	end
+
+	for Line in io.lines("motd.txt") do
+		table.insert(MOTD, Line)
+	end
+end
+
+-- Now let's show it off.
+function ShowMOTD(Player)
+	for i = 1, #MOTD do
+		Player:SendMessage(MOTD[i])
+	end
+end
+
+function HandleMOTDCommand(Split, Player)
+	ShowMOTD(Player)
+	return true
+end
