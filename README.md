@@ -28,7 +28,7 @@ By default server configuration, these commands are granted to architects.
 | ------- | ---------- | ----------- |
 | `/clear [player]` | `basics.clear` `basics.clear.others` | Clears a player's inventory. |
 | `/get <item> [amount] [data] [datatag]` | `basics.get` | Gets an item for you with optional data. |
-| `/goto <player> (or) /goto <x> <y> <z>` | Takes you to any player or coordinates. |
+| `/goto <player> (or) /goto <x> <y> <z> (or) /goto spot` | Takes you to any player, coordinates, or to a random location. |
 | `/mode <creative \| spectator> [player]` | `basics.mode` | Changes a player's gamemode. |
 | `/summon <entity> [x] [y] [z]` | `basics.summon` | Summons an entity. |
 | `/time <day \| night \| value> [world]` | `basics.time` | Changes the world's time. |

@@ -2,7 +2,14 @@
 -- Implements the /goto command and coordinate teleportation.
 
 function HandleGotoCommand(a_Split, a_Player)
-	if #a_Split == 2 then
+	if #a_Split == 2 and a_Split[2] == "spot" then
+		local X = math.random(-500, 5000);
+		local Y = math.random(50,50);
+		local Z = math.random(-5000, 5000);
+		a_Player:TeleportToCoords( X, Y, Z )
+		SendMessage(a_Player, cChatColor.LightGray .. "Took you to X: " .. X .. ", Y: " .. Y .. ", Z: " .. Z .. ".")
+		return true
+	elseif #a_Split == 2 then
         -- Teleport to player specified in a_Split[2].
         TeleportToPlayer(a_Player, a_Split[2])
 		return true
@@ -48,7 +55,7 @@ function HandleGotoCommand(a_Split, a_Player)
 		SendMessage(a_Player, cChatColor.LightGray .. "Took you to X: " .. X .. ", Y: " .. Y .. ", Z: " .. Z .. ".")
 		return true
 	else
-		SendMessage(a_Player, cChatColor.LightGray .. "Usage: " .. a_Split[1] .. " <player> (or) " .. a_Split[1] .. " <x> <y> <z>")
+		SendMessage(a_Player, cChatColor.LightGray .. "Usage: " .. a_Split[1] .. " <player> (or) " .. a_Split[1] .. " <x> <y> <z> (or) " .. a_Split[1] .. " spot")
 		return true
 	end
 end

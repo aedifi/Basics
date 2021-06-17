@@ -64,7 +64,7 @@ g_PluginInfo =
 		{
 			Permission = "basics.goto",
 			Handler = HandleGotoCommand,
-			HelpString = "Takes you to any player or coordinates.",
+			HelpString = "Takes you to any player, coordinates, or random location.",
 		},
 		["/kick"] = 
 		{
