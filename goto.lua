@@ -3,7 +3,7 @@
 
 function HandleGotoCommand(a_Split, a_Player)
 	if #a_Split == 2 and a_Split[2] == "spot" then
-		local X = math.random(-500, 5000);
+		local X = math.random(-5000, 5000);
 		local Y = math.random(50,50);
 		local Z = math.random(-5000, 5000);
 		a_Player:TeleportToCoords( X, Y, Z )

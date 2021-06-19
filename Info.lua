@@ -192,6 +192,12 @@ g_PluginInfo =
 			Handler = HandleSpyCommand,
 			HelpString = "Spies on the commands of players.",
 		},
+		["/sudo"] = 
+		{
+			Permission = "basics.sudo",
+			Handler = HandleSudoCommand,
+			HelpString = "Executes a command block with superuser privileges.",
+		},
 		["/summon"] =
 		{
 			Permission = "basics.summon",
@@ -287,6 +293,11 @@ g_PluginInfo =
 		{
 			Handler = HandleConsoleSeed,
 			HelpString = "Displays the world's seed.",
+		},
+		["sudo"] = 
+		{
+			Handler = HandleConsoleSudo,
+			HelpString = "Executes a command block with superuser privileges.",
 		},
 		["time"] = 
 		{

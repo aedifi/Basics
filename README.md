@@ -53,3 +53,4 @@ By default server configuration, these commands are granted to administrators.
 | Usage | Permission(s) | Description |
 | ------- | ---------- | ----------- |
 | `/assign <player> [rank]` | `basics.assign` | Displays or assigns a player's rank. |
+| `/sudo [<x> <y> <z>]` | `basics.sudo` | Executes a command block with superuser privileges. |

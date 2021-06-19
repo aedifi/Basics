@@ -30,7 +30,7 @@ function OnExecuteCommand(Player, CommandSplit, EntireCommand)
 				end
 			-- If the command was executed by the console or by a command block, then send a different message.
 			else
-				OtherPlayer:SendMessage(cChatColor.LightGray .. cChatColor.Italic .. "Console/commandblock: " .. cChatColor.Plain .. cChatColor.LightGray .. EntireCommand)
+				OtherPlayer:SendMessage(cChatColor.LightGray .. cChatColor.Italic .. "Console/cmdblock: " .. cChatColor.Plain .. cChatColor.LightGray .. EntireCommand)
 			end
 		end
 	end
