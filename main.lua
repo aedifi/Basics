@@ -21,6 +21,7 @@ function Initialize(Plugin)
 	cPluginManager:AddHook(cPluginManager.HOOK_CHAT, OnChat)
 	cPluginManager:AddHook(cPluginManager.HOOK_EXPLODING, OnExploding)
 	cPluginManager:AddHook(cPluginManager.HOOK_PLAYER_BREAKING_BLOCK, OnPlayerBreakingBlock)
+	cPluginManager:AddHook(cPluginManager.HOOK_PLAYER_JOINED, MotdOnPlayerJoined)
 	cPluginManager:AddHook(cPluginManager.HOOK_PLAYER_MOVING, OnPlayerMoving)
 	cPluginManager:AddHook(cPluginManager.HOOK_PLAYER_PLACING_BLOCK, OnPlayerPlacingBlock)
 	cPluginManager:AddHook(cPluginManager.HOOK_PLAYER_RIGHT_CLICK, OnPlayerRightClick)
@@ -55,9 +56,6 @@ function Initialize(Plugin)
 
 	LoadMOTD()
 
-	-- WEBLOGINFO("Basics has been enabled.")
-	-- LOG(Plugin:GetName() .. " has been enabled.")
-
 	return true
 end
 
@@ -65,7 +63,3 @@ function OnChat(Player, Message)
 	LOGINFO(Player:GetName() .. ": " .. StripColorCodes(Message));
 	return false
 end
-
--- function OnDisable()
--- 	LOG("Basics has been disabled.")
--- end

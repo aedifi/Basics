@@ -368,7 +368,7 @@ end
 -- HOOK_PLAYER_JOINED callback hook.
 -- If the player's banned by their unique identifier or username, kick them.
 -- If the player's unique identifier isn't already present, set it.
-local function OnPlayerJoined(a_Player)
+local function BansOnPlayerJoined(a_Player)
 	local UUID = a_Player:GetUUID()
 	local Name = a_Player:GetName()
 
@@ -403,6 +403,6 @@ function InitializeBanlist()
 	InitializeDB()
 	ResolveUUIDs()
 
-	cPluginManager:AddHook(cPluginManager.HOOK_PLAYER_JOINED, OnPlayerJoined)
+	cPluginManager:AddHook(cPluginManager.HOOK_PLAYER_JOINED, BansOnPlayerJoined)
 	cPluginManager:AddHook(cPluginManager.HOOK_LOGIN, OnLogin)
 end

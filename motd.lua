@@ -16,11 +16,15 @@ function LoadMOTD()
 	end
 end
 
--- Now let's show it off.
 function ShowMOTD(Player)
 	for i = 1, #MOTD do
 		Player:SendMessage(MOTD[i])
 	end
+end
+
+function MotdOnPlayerJoined(Player)
+	-- Send the MOTD to the player.
+	ShowMOTD(Player)
 end
 
 function HandleMOTDCommand(Split, Player)
