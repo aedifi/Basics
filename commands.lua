@@ -36,14 +36,14 @@ local function handleCommandsPage(a_Player, a_PageNumber, a_Beginning)
 	-- Check the number of pages.
 	local numCommands = #output
 	if (numCommands == 0) then
-		a_Player:SendMessage(cChatColor.LightGray .. "Couldn't find any of those commands.")
+		a_Player:SendMessageFailure("Could not find any permissible commands.")
 		return true
 	end
 	local firstLine = (a_PageNumber - 1) * g_CommandsPerPage + 1
 	local lastLine = firstLine + g_CommandsPerPage
 	local maxPages = math.ceil(numCommands / g_CommandsPerPage)
 	if (firstLine > numCommands) then
-		a_Player:SendMessage(cChatColor.LightGray .. "Couldn't find that page; only pages 1-" .. maxPages .. " exist.")
+		a_Player:SendMessageFailure("Could not find that page; only pages 1-" .. maxPages .. " exist.")
 		return true
 	end
 

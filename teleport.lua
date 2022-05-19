@@ -1,5 +1,8 @@
--- goto.lua
+-- teleport.lua
 -- Implements the /goto command and coordinate teleportation.
+
+BackCoords = {}
+BackWorld = {}
 
 function HandleGotoCommand(a_Split, a_Player)
 	if #a_Split == 2 and a_Split[2] == "rand" then
@@ -7,7 +10,7 @@ function HandleGotoCommand(a_Split, a_Player)
 		local Y = math.random(50,50);
 		local Z = math.random(-5000, 5000);
 		a_Player:TeleportToCoords( X, Y, Z )
-		SendMessage(a_Player, cChatColor.LightGray .. "Took you to X: " .. X .. ", Y: " .. Y .. ", Z: " .. Z .. ".")
+		SendMessageSuccess(a_Player, "Took you to X: " .. X .. ", Y: " .. Y .. ", Z: " .. Z .. ".")
 		return true
 	elseif #a_Split == 2 then
         -- Teleport to player specified in a_Split[2].
@@ -40,22 +43,60 @@ function HandleGotoCommand(a_Split, a_Player)
 		end
 		-- Check the given coordinates for errors.
 		if (type(X) ~= 'number') then
-			SendMessage(a_Player, cChatColor.LightGray .. "Couldn't take you to a non-numeric coordinate.")
+			SendMessageFailure(a_Player, "Could not use a non-numeric coordinate (" .. a_Split[2] .. ").")
 			return true
 		end
 		if (type(Y) ~= 'number') then
-			SendMessage(a_Player, cChatColor.LightGray .. "Couldn't take you to a non-numeric coordinate.")
+			SendMessageFailure(a_Player, "Could not use a non-numeric coordinate (" .. a_Split[3] .. ").")
 			return true
 		end
 		if (type(Z) ~= 'number') then
-			SendMessage(a_Player, cChatColor.LightGray .. "Couldn't take you to a non-numeric coordinate.")
+			SendMessageFailure(a_Player, "Could not use a non-numeric coordinate (" .. a_Split[4] .. ").")
 			return true
 		end
 		a_Player:TeleportToCoords( X, Y, Z )
-		SendMessage(a_Player, cChatColor.LightGray .. "Took you to X: " .. X .. ", Y: " .. Y .. ", Z: " .. Z .. ".")
+		SendMessageSuccess(a_Player, "Took you to X: " .. X .. ", Y: " .. Y .. ", Z: " .. Z .. ".")
 		return true
 	else
 		SendMessage(a_Player, cChatColor.LightGray .. "Usage: " .. a_Split[1] .. " <player> (or) " .. a_Split[1] .. " <x> <y> <z> (or) " .. a_Split[1] .. " rand")
 		return true
+	end
+end
+
+function HandleBackCommand(Split, Player)
+	local BackCoords = BackCoords[Player:GetName()]
+	if BackCoords == nil then
+		Player:SendMessageFailure("Could not find any known last position.")
+	else
+		local CurWorld = Player:GetWorld()
+		local OldWorld = BackWorld[Player:GetName()]
+		if CurWorld ~= OldWorld then
+			Player:MoveToWorld(OldWorld, true, Vector3d(BackCoords.x, BackCoords.y, BackCoords.z))
+		else
+			Player:TeleportToCoords(BackCoords.x, BackCoords.y, BackCoords.z)
+		end
+		Player:SendMessageSuccess("Took you back to your last known position.")
+	end
+	return true
+end
+
+function OnEntityChangingWorld(Entity, World)
+	if Entity:IsPlayer() then
+		BackWorld[Entity:GetName()] = Entity:GetWorld()
+		BackCoords[Entity:GetName()] = Vector3d(Entity:GetPosX(), Entity:GetPosY(), Entity:GetPosZ())
+	end
+end
+
+function OnEntityTeleport(Entity, OldPosition, NewPosition)
+	if Entity:IsPlayer() then
+		BackWorld[Entity:GetName()] = Entity:GetWorld()
+		BackCoords[Entity:GetName()] = Vector3d(OldPosition)
+	end
+end
+
+function OnKilled(Victim, TDI, DeathMessage)
+	if Victim:IsPlayer() then
+		BackWorld[Victim:GetName()] = Victim:GetWorld()
+		BackCoords[Victim:GetName()] = Vector3d(Victim:GetPosX(), Victim:GetPosY(), Victim:GetPosZ())
 	end
 end

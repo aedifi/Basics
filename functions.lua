@@ -151,9 +151,8 @@ function GetWorld( WorldName, Player )
 	else
 		local World = cRoot:Get():GetWorld(WorldName)
 		if not World then
-			local Message = "Couldn't find that world."
 			if Player then
-				SendMessage(Player, cChatColor.LightGray .. Message)
+				SendMessageFailure(Player, "Could not find that world (" .. WorldName .. "), did you use Caps?")
 			end
 		end
 		return World

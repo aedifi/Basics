@@ -1,9 +1,6 @@
 -- time.lua
 -- Implements /time and time-related subcommands.
 
-local PlayerTimeCommandUsage = "Usage: /time <day | night | value> [world]"
-local ConsoleTimeCommandUsage = "Usage: time <day | night | value> [world]"
-
 -- Translate our arbitrary labels to in-game values.
 local SpecialTimesTable = {
 	["day"] = 1000,
@@ -56,29 +53,40 @@ end
 local function CommonSetTime(World, Time)
 	-- Make sure the world is valid...
 	if not World then
-		return true
+		return false
 	end
 	local TimeToSet = SpecialTimesTable[Time] or tonumber(Time)
 	if not TimeToSet then
 		return false
 	else
-		SetTime(World, TimeToSet)
-		SendMessage(Player, cChatColor.LightGray .. "Changed the time to " .. TimeToSet .. ".")
+		SetTime(World, TimeToSet)	
 	end
 	return true
 end
 
 -- /time <day | night | value> [world]
 function HandleTimeCommand(Split, Player)
-	if not CommonSetTime(GetWorld(Split[3], Player), Split[2]) then
-		SendMessage(Player, cChatColor.LightGray .. PlayerTimeCommandUsage)
-	end
+	if not GetWorld(Split[3], Player) then
+		return true
+	elseif not CommonSetTime(GetWorld(Split[3], Player), Split[2]) then
+		SendMessage(Player, cChatColor.LightGray .. "Usage: " .. Split[1] .. " <day | night | value> [world]")
+	elseif Split[3] == nil then
+        SendMessageSuccess(Player, "Set the time to " .. Split[2] .. ".")
+    else
+        SendMessageSuccess(Player, "Set that world's time to " .. Split[2] .. " (" .. Split[3] .. ").")
+    end
 	return true
 end
 
 function HandleConsoleTime(a_Split)
-	if not CommonSetTime(GetWorld(a_Split[3]), a_Split[2]) then
-		LOG(ConsoleTimeCommandUsage)
+	if not GetWorld(Split[3], Player) then
+		return true, "Could not find that world, did you use Caps?"
+	elseif not CommonSetTime(GetWorld(a_Split[3]), a_Split[2]) then
+--		LOG(ConsoleTimeCommandUsage)
+		return true, "Usage: " .. a_Split[1] .. " <day | night | value> [world]"
+	elseif Split[3] == nil then
+		return true, "Set the spawn world's time to " .. a_Split[2] .. "."
+	else
+		return true, "Set that world's time to " .. a_Split[2] .. " (" .. a_Split[3] .. ")."
 	end
-	return true
 end

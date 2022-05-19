@@ -27,7 +27,7 @@ end
 function HandleSpawnCommand(Split, Player)
 	local NumParams = #Split
 	if (NumParams == 1) then
-	    SendMessage(Player, cChatColor.LightGray .. "Took you to this world's spawn.")
+	    SendMessageSuccess(Player, "Took you to the spawnpoint.")
 		SendPlayerToWorldSpawn(Player)
 		return true
 	elseif (NumParams ~= 2) then
@@ -36,17 +36,17 @@ function HandleSpawnCommand(Split, Player)
 	end
 	local World = cRoot:Get():GetWorld(Split[2])
 	if (Player:GetWorld():GetName() == Split[2]) then
-		SendMessage(Player, cChatColor.LightGray .. "Took you to this world's spawn.")
+		SendMessageSuccess(Player, "Took you to the spawnpoint.")
 		SendPlayerToWorldSpawn(Player)
 		return true
 	elseif(World == nil) then
-		SendMessage(Player, cChatColor.LightGray .. "Couldn't find that world.")
+		SendMessageFailure(Player, "Could not find that world (" .. Split[2] .. "), did you use Caps?")
 		return true
 	elseif(Player:MoveToWorld(World, true, Vector3d(World:GetSpawnX(), World:GetSpawnY(), World:GetSpawnZ())) == false) then
-		SendMessage(Player, cChatColor.LightGray .. "Couldn't take you to that world.")
+		SendMessageFailure(Player, "Could not take you to that world (" .. Split[2] .. "), oops!")
 		return true
 	end
-	SendMessage(Player, cChatColor.LightGray .. "Took you to that world's spawn.")
+	SendMessageSuccess(Player, "Took you to that world's spawnpoint (" .. Split[2] .. ").")
 	return true
 end
 
@@ -58,10 +58,10 @@ function HandleSetSpawnCommand(Split, Player)
 	local PlayerZ = Player:GetPosZ()
   
 	if (World:SetSpawn(PlayerX, PlayerY, PlayerZ)) then
-		SendMessage(Player, cChatColor.LightGray .. "Changed the spawn position.")
+		SendMessageSuccess(Player, "Moved the spawnpoint to X: " .. PlayerX .. ", Y: " .. PlayerY .. ", Z: " .. PlayerZ .. ".")
 		return true
 	else
-		SendMessage(Player, cChatColor.LightGray .. "Couldn't change the spawn position.")
+		SendMessageFailure(Player, "Could not move the spawnpoint, are permissions set?")
 		return false
 	end
 end

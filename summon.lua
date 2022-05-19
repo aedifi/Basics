@@ -181,24 +181,24 @@ function HandleSummonCommand(Split, Player)
 		end
 
 		if not X then
-			Player:SendMessage(cChatColor.LightGray .. "Couldn't summon that quantity.")
+			Player:SendMessageFailure("Could not use a non-numeric coordinate (" .. Split[3] .. ").")
 			return true
 		end
 
 		if not Y then
-			Player:SendMessage(cChatColor.LightGray .. "Couldn't summon that quantity.")
+			Player:SendMessageFailure("Could not use a non-numeric coordinate (" .. Split[4] .. ").")
 			return true
 		end
 
 		if not Z then
-			Player:SendMessage(cChatColor.LightGray .. "Couldn't summon that quantity.")
+			Player:SendMessageFailure("Could not use a non-numeric coordinate (" .. Split[5] .. ").")
 			return true
 		end
 
 		if SpawnEntity(Split[2], World, X, Y, Z) then
-			Player:SendMessage(cChatColor.LightGray .. "Summoned an entity at X: " .. math.floor(X) .. ", Y: " .. math.floor(Y) .. ", Z: " .. math.floor(Z) .. ".")
+			Player:SendMessageSuccess("Summoned an entity at X: " .. math.floor(X) .. ", Y: " .. math.floor(Y) .. ", Z: " .. math.floor(Z) .. ".")
 		else
-			Player:SendMessage(cChatColor.LightGray .. "Couldn't find that entity.")
+			Player:SendMessageFailure("Could not find that entity (" .. Split[2] .. ").")
 		end
 	end
 	return true

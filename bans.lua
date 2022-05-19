@@ -289,7 +289,7 @@ function HandleConsoleBanIP(a_Split)
 		function (a_Player)
 			local Client = a_Player:GetClientHandle()
 			if (Client and Client:GetIPString() == BanIP) then
-				Client:Kick(cChatColor.Gray .. "\\-(o)-(o)-/" .. cChatColor.LightGray .. "\n\n" .. "Couldn't connect because your address is banned." .. cChatColor.Gray .. "\n\n" .. cChatColor.LightGray .. "\"" .. Reason .. "\"")
+				Client:Kick(cChatColor.Gray .. "\\-(o)-(o)-/" .. cChatColor.LightGray .. "\n\n" .. "Could not connect; you're banned from the server!" .. cChatColor.Gray .. "\n\n" .. cChatColor.LightGray .. "\"" .. Reason .. "\"")
 			end
 		end
 	)
@@ -333,7 +333,7 @@ local function InitializeDB()
 	local ErrMsg
 	BanlistDB, ErrMsg = NewSQLiteDB("banlist.sqlite")
 	if not(BanlistDB) then
-		LOGWARNING("Couldn't access the banlist. SQLite: " .. (ErrMsg or "<no details>"))
+		LOGWARNING("Could not access the banlist. SQLite: " .. (ErrMsg or "<no details>"))
 		error(ErrMsg)
 	end
 
@@ -360,8 +360,8 @@ local function InitializeDB()
 		not(BanlistDB:CreateDBTable("BannedNames", NameListColumns)) or
 		not(BanlistDB:CreateDBTable("BannedIPs",   IPListColumns))
 	) then
-		LOGWARNING("Couldn't access the banlist.")
-		error("Couldn't access the banlist.")
+		LOGWARNING("Could not access the banlist, are permissions set?")
+		error("Could not access the banlist, are permissions set?")
 	end
 end
 
@@ -381,7 +381,7 @@ local function BansOnPlayerJoined(a_Player)
 	-- Kick the player if they're banned.
 	local IsBanned, Reason = IsPlayerBanned(UUID, Name)
 	if (IsBanned) then
-		a_Player:GetClientHandle():Kick(cChatColor.Gray .. "\\-(o)-(o)-/" .. cChatColor.LightGray .. "\n\n" .. "Couldn't connect because you are banned." .. cChatColor.Gray .. "\n\n" .. cChatColor.LightGray .. "\"" .. Reason .. "\"")
+		a_Player:GetClientHandle():Kick(cChatColor.Gray .. "\\-(o)-(o)-/" .. cChatColor.LightGray .. "\n\n" .. "Could not connect; you're banned from the server!" .. cChatColor.Gray .. "\n\n" .. cChatColor.LightGray .. "\"" .. Reason .. "\"")
 		return true
 	end
 end
@@ -391,7 +391,7 @@ end
 local function OnLogin(a_Client)
 	local IsBanned, Reason = IsIPBanned(a_Client:GetIPString())
 	if (IsBanned) then
-		a_Client:Kick(cChatColor.Gray .. "\\-(o)-(o)-/" .. cChatColor.LightGray .. "\n\n" .. "Couldn't connect because your address is banned." .. cChatColor.Gray .. "\n\n" .. cChatColor.LightGray .. "\"" .. Reason .. "\"")
+		a_Client:Kick(cChatColor.Gray .. "\\-(o)-(o)-/" .. cChatColor.LightGray .. "\n\n" .. "Could not connect; you're banned from the server!" .. cChatColor.Gray .. "\n\n" .. cChatColor.LightGray .. "\"" .. Reason .. "\"")
 		return true
 	end
 end

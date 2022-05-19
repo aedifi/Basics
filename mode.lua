@@ -47,7 +47,7 @@ local function ChangeGameMode(GameMode, PlayerName)
 		function(PlayerMatch)
 			if string.lower(PlayerMatch:GetName()) == lcPlayerName then
 				PlayerMatch:SetGameMode(GameMode)
-				SendMessage(PlayerMatch, cChatColor.LightGray .. "Set your gamemode to " .. GameModeNameTable[GameMode] .. ".")
+				SendMessageSuccess(PlayerMatch, "Set your gamemode to " .. GameModeNameTable[GameMode] .. ".")
 				GMChanged = true
 			end
 			return true

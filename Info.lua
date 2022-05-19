@@ -5,7 +5,7 @@ g_PluginInfo =
 {
 	Name = "Basics",
 	Version = "1",
-	Date = "2020-11-27",
+	Date = "2022-05-19",
 	SourceLocation = "https://github.com/aedifi/basics",
 	Description = [[Basic commands and permissions.]],
 	
@@ -13,200 +13,223 @@ g_PluginInfo =
 	{
 		["/assign"] = 
 		{
-			Permission = "basics.assign",
+			Alias = "/rank",
+			Permission = "basics.admin.assign",
 			Handler = HandleAssignCommand,
 			HelpString = "Displays or assigns a player's rank.",
 		},
 		["/ban"] = 
 		{
-			Permission = "basics.ban",
+			Permission = "basics.mod.ban",
 			Handler = HandleBanCommand,
 			HelpString = "Bans a player.",
 		},
 		["/chunks"] = 
 		{
-			Permission = "basics.chunks",
+			Permission = "basics.visitor.chunks",
 			Handler = HandleChunksCommand,
 			HelpString = "Lists any chunks in memory.",
 		},
 		["/clear"] = 
 		{
-			Permission = "basics.clear",
+			Alias = "/ci",
+			Permission = "basics.architect.clear",
 			Handler = HandleClearCommand,
 			HelpString = "Clears a player's inventory.",
 		},
 		["/commands"] = 
 		{
-			Alias = "/help",
-			Permission = "basics.commands",
+			Alias = {"/?", "/help"},
+			Permission = "basics.visitor.commands",
 			Handler = HandleCommandsCommand,
 			HelpString = "Lists permissible commands.",
 		},
-		["/discretion"] = 
-		{
-			Permission = "basics.discretion",
-			Handler = HandleDiscretionCommand,
-			HelpString = "Changes if you're spying on players.",
-		},
 		["/distance"] = 
 		{
-			Permission = "basics.distance",
+			Permission = "basics.visitor.distance",
 			Handler = HandleDistanceCommand,
 			HelpString = "Sets your render distance.",
 		},
+		["/execute"] = 
+		{
+			Permission = "basics.admin.execute",
+			Handler = HandleExecuteCommand,
+			HelpString = "Executes a command block with superuser privileges.",
+		},
 		["/get"] = 
 		{
-			Permission = "basics.get",
+			Alias = {"/give", "/i"},
+			Permission = "basics.architect.get",
 			Handler = HandleGetCommand,
 			HelpString = "Gets an item for you.",
 		},
 		["/goto"] = 
 		{
-			Permission = "basics.goto",
+			Alias = {"/teleport", "/tp"},
+			Permission = "basics.architect.goto",
 			Handler = HandleGotoCommand,
 			HelpString = "Takes you to any player, coordinates, or random location.",
 		},
+		["/item"] = 
+		{
+			Alias = {"/itemdb"},
+			Permission = "basics.architect.item",
+			Handler = HandleItemCommand,
+			HelpString = "Displays the information of an item you're holding.",
+		},
 		["/kick"] = 
 		{
-			Permission = "basics.kick",
+			Permission = "basics.mod.kick",
 			Handler = HandleKickCommand,
 			HelpString = "Kicks a player.",
 		},
 		["/lag"] = 
 		{
-			Permission = "basics.lag",
+			Permission = "basics.visitor.lag",
 			Handler = HandleLagCommand,
 			HelpString = "Calculates the average ticks per second.",
 		},
 		["/memory"] = 
 		{
-			Permission = "basics.memory",
+			Alias = "/mem",
+			Permission = "basics.visitor.memory",
 			Handler = HandleMemoryCommand,
 			HelpString = "Calculates the amount of memory being used.",
 		},
 		["/mode"] =
 		{	
-			Permission= "basics.mode",
+			Alias = {"/gamemode", "/gm"},
+			Permission= "basics.architect.mode",
 			Handler = HandleChangeGMCommand,
 			HelpString = "Changes a player's gamemode.",
 		},
 		["/motd"] = 
 		{
-			Permission = "basics.motd",
+			Permission = "basics.visitor.motd",
 			Handler = HandleMOTDCommand,
 			HelpString = "Displays the message of the day.",
 		},
-		["/nearby"] = 
+		["/near"] = 
 		{
-			Permission = "basics.nearby",
+			Alias = "/nearby",
+			Permission = "basics.visitor.nearby",
 			Handler = HandleNearbyCommand,
 			HelpString = "Lists players who are nearby.",
 		},
 		["/pardon"] = 
 		{
-			Permission = "basics.pardon",
+			Alias = "/unban",
+			Permission = "basics.mod.pardon",
 			Handler = HandlePardonCommand,
 			HelpString = "Pardons a player.",
 		},
 		["/players"] = 
 		{
-			Permission = "basics.players",
+			Alias = {"/list", "/online"},
+			Permission = "basics.visitor.players",
 			Handler = HandlePlayersCommand,
 			HelpString = "Lists players who are connected.",
 		},
 		["/plugins"] = 
 		{
-			Permission = "basics.plugins",
+			Alias = "/pl",
+			Permission = "basics.visitor.plugins",
 			Handler = HandlePluginsCommand,
 			HelpString = "Lists configured plugins.",
 		},
 		["/ranks"] =
 		{
-			Permission = "basics.ranks",
+			Permission = "basics.visitor.ranks",
 			Handler = HandleRanksCommand,
 			HelpString = "Lists configured ranks.",
 		},
 		["/regen"] =
 		{
-			Permission = "basics.regen",
+			Alias = "/regenerate",
+			Permission = "basics.mod.regen",
 			Handler = HandleRegenCommand,
 			HelpString = "Regenerates a specific chunk.",
 		},
 		["/time"] = 
 		{
-			Permission = "basics.time",
+			Alias = "/t",
+			Permission = "basics.architect.time",
 			Handler = HandleTimeCommand,
 			HelpString = "Changes the world's time.",
 		},
 		["/weather"] = 
 		{
-			Permission = "basics.weather",
+			Alias = "/w",
+			Permission = "basics.architect.weather",
 			Handler = HandleWeatherCommand,
 			HelpString = "Changes the world's weather.",
 		},
 		["/whisper"] = 
 		{
-			Permission = "basics.whisper",
+			Alias = {"/m", "/message", "/msg"},
+			Permission = "basics.visitor.whisper",
 			Handler = HandleWhisperCommand,
 			HelpString = "Directly messages somebody.",
 		},
 		["/worlds"] =
 		{
-			Permission = "basics.worlds",
+			Permission = "basics.visitor.worlds",
 			Handler = HandleWorldsCommand,
 			HelpString = "Lists configured worlds.",
 		},
 		["/reload"] = 
 		{
-			Permission = "basics.reload",
+			Permission = "basics.mod.reload",
 			Handler = HandleReloadCommand,
 			HelpString = "Reloads all plugins.",
 		},
 		["/reply"] = 
 		{
-			Permission = "basics.reply",
+			Alias = "/r",
+			Permission = "basics.visitor.reply",
 			Handler = HandleReplyCommand,
 			HelpString = "Directly replies to somebody.",
 		},
 		["/seed"] = 
 		{
-			Permission = "basics.seed",
+			Permission = "basics.visitor.seed",
 			Handler = HandleSeedCommand,
 			HelpString = "Displays the world's seed.",
 		},
 		["/save"] = 
 		{
-			Permission = "basics.save",
+			Permission = "basics.mod.save",
 			Handler = HandleSaveCommand,
 			HelpString = "Saves all worlds to disk.",
 		},
 		["/spawn"] = 
 		{
-			Permission = "basics.spawn",
+			Permission = "basics.visitor.spawn",
 			Handler = HandleSpawnCommand,
 			HelpString = "Takes you to any world's spawn.",
 		},
 		["/spy"] = 
 		{
-			Permission = "basics.spy",
+			Permission = "basics.mod.spy",
 			Handler = HandleSpyCommand,
 			HelpString = "Spies on the commands of players.",
 		},
 		["/sudo"] = 
 		{
-			Permission = "basics.sudo",
+			Permission = "basics.admin.sudo",
 			Handler = HandleSudoCommand,
-			HelpString = "Executes a command block with superuser privileges.",
+			HelpString = "Executes a command as another player.",
 		},
 		["/summon"] =
 		{
-			Permission = "basics.summon",
+			Alias = {"/mob", "/spawnmob"},
+			Permission = "basics.architect.summon",
 			Handler = HandleSummonCommand,
 			HelpString = "Summons an entity.",
 		},
 		["/unload"] =
 		{
-			Permission = "basics.unload",
+			Permission = "basics.mod.unload",
 			Handler = HandleUnloadCommand,
 			HelpString = "Unloads chunks with no players in them.",
 		},
@@ -233,6 +256,11 @@ g_PluginInfo =
 		{
 			Handler = HandleConsoleChunks,
 			HelpString = "Lists any chunks in memory.",
+		},
+		["execute"] = 
+		{
+			Handler = HandleConsoleExecute,
+			HelpString = "Executes a command block with superuser privileges.",
 		},
 		["pardon"] = 
 		{
@@ -297,7 +325,7 @@ g_PluginInfo =
 		["sudo"] = 
 		{
 			Handler = HandleConsoleSudo,
-			HelpString = "Executes a command block with superuser privileges.",
+			HelpString = "Executes a command as a player.",
 		},
 		["time"] = 
 		{

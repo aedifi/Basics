@@ -5,28 +5,24 @@ function HandleRegenCommand(a_Split, a_Player)
 	-- Check parameters...
 	local numParams = #a_Split
 	if (numParams == 2) or (numParams > 3) then
-		SendMessage(a_Player, cChatColor.LightGray .. "Usage: '" .. a_Split[1] .. "' | '" .. a_Split[1] .. " <x> <z>'" )
+		SendMessage(a_Player, cChatColor.LightGray .. "Usage: " .. a_Split[1] .. " <x> <z>" )
 		return true
     end
     
 	-- Grab the coordinates of a chunk.
-	local chunkX = a_Player:GetChunkX()
-	local chunkZ = a_Player:GetChunkZ()
-	if (numParams == 3) then
-		chunkX = tonumber(a_Split[2])
-		chunkZ = tonumber(a_Split[3])
-		if (chunkX == nil) then
-			SendMessage(a_Player, cChatColor.LightGray .. "Couldn't regenerate a non-numeric chunk.")
-			return true
-		end
-		if (chunkZ == nil) then
-			SendMessage(a_Player, cChatColor.LightGray .. "Couldn't regenerate a non-numeric chunk.")
-			return true
-		end
-    end
+	local chunkX = tonumber(a_Split[2])
+	if (chunkX == nil) then
+		SendMessageFailure(a_Player, "Could not use a non-numeric coordinate (" .. chunkX .. ")")
+		return true
+	end
+	local chunkZ = tonumber(a_Split[3])
+	if (chunkZ == nil) then
+		SendMessageFailure(a_Player, "Could not use a non-numeric coordinate (" .. chunkZ .. ").")
+		return true
+	end
     
 	-- Regenerate that chunk.
-	SendMessage(a_Player, cChatColor.LightGray .. "Regenerated the chunk at X: " .. chunkX .. ", Y: " .. chunkZ .. ".")
+	SendMessageSuccess(a_Player, "Regenerated the chunk at X: " .. chunkX .. ", Y: " .. chunkZ .. ".")
 	a_Player:GetWorld():RegenerateChunk(chunkX, chunkZ)
 	return true
 end
@@ -41,11 +37,11 @@ function HandleConsoleRegen(a_Split)
 	-- Grab the coordinates of a chunk.
 	local chunkX = tonumber(a_Split[2])
 	if (chunkX == nil) then
-		return true, "Couldn't regenerate a non-numeric chunk."
+		return true, "Could not use a non-numeric coordinate."
 	end
 	local chunkZ = tonumber(a_Split[3])
 	if (chunkZ == nil) then
-		return true, "Couldn't regenerate a non-numeric chunk."
+		return true, "Could not use a non-numeric coordinate."
 	end
 	
 	-- Get the correct world.
@@ -55,7 +51,7 @@ function HandleConsoleRegen(a_Split)
 	else
 		world = cRoot:Get():GetWorld(a_Split[4])
 		if (world == nil) then
-			return true, "Couldn't find that world."
+			return true, "Could not find that world, did you use Caps?"
 		end
 	end
 	

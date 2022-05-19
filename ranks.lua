@@ -23,7 +23,7 @@ function HandleAssignCommand(Split, Player)
 		local PlayerUUID = GetPlayerUUID(PlayerName)
 
 		if not PlayerUUID or string.len(PlayerUUID) ~= 32 then
-			Response = SendMessage(Player, cChatColor.LightGray .. "Couldn't find that player.")
+			Response = SendMessageFailure(Player, "Could not find that player (" .. PlayerName .. ").")
 		else
 			-- If lacking parameters, view their rank.
 			if not NewRank then
@@ -31,14 +31,14 @@ function HandleAssignCommand(Split, Player)
 				local CurrentRank = cRankManager:GetPlayerRankName(PlayerUUID)
 
 				if CurrentRank == "" then
-					Response = SendMessage(Player, cChatColor.LightGray .. "Couldn't find any rank for that player.")
+					Response = SendMessageFailure(Player, "Could not find that player's rank (" .. PlayerName .. "), have they joined before?")
 				else
 					Response = SendMessage(Player, cChatColor.LightGray .. "Found the player " .. PlayerName .. "'s rank to be of " .. CurrentRank .. ".")
 				end
 			else
 				-- Change the player's rank:
 				if not cRankManager:RankExists(NewRank) then
-					Response = SendMessage(Player, cChatColor.LightGray .. "Couldn't find that rank.")
+					Response = SendMessageFailure(Player, "Could not find that rank (" .. NewRank .. "), did you use Caps?")
 				else
 					cRankManager:SetPlayerRank(PlayerUUID, PlayerName, NewRank)
 					cRoot:Get():ForEachPlayer(
@@ -70,7 +70,7 @@ function HandleConsoleAssign(Split)
 		local PlayerUUID = GetPlayerUUID(PlayerName)
 
 		if not PlayerUUID or string.len(PlayerUUID) ~= 32 then
-			Response = "Couldn't find that player."
+			Response = "Could not find that player."
 		else
 			-- If lacking parameters, view their rank.
 			if not NewRank then
@@ -78,14 +78,14 @@ function HandleConsoleAssign(Split)
 				local CurrentRank = cRankManager:GetPlayerRankName(PlayerUUID)
 
 				if CurrentRank == "" then
-					Response = "Couldn't find any rank for that player."
+					Response = "Could not find that player's rank, have they joined before?"
 				else
 					Response = "Found the player " .. PlayerName .. "'s rank to be of " .. CurrentRank .. "."
 				end
 			else
 				-- Change the player's rank:
 				if not cRankManager:RankExists(NewRank) then
-					Response = "Couldn't find that rank."
+					Response = "Could not find that rank, did you use Caps?"
 				else
 					cRankManager:SetPlayerRank(PlayerUUID, PlayerName, NewRank)
 					cRoot:Get():ForEachPlayer(

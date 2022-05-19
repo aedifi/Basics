@@ -25,7 +25,7 @@ function HandleKickCommand(Split, Player)
 		return true
 	end
 	if (IsPlayerKicked == false) then
-		SendMessage(Player, cChatColor.LightGray .. "Couldn't find that player.")       
+		SendMessageFailure(Player, "Could not find that player (" .. Split[2] .. "), are they online?")       
 		return true
 	end
 end

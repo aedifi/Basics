@@ -16,14 +16,14 @@ local function IsInSpawn(X, Y, Z, WorldName)
 end
 
 local function CheckBlockModification(Player, BlockX, BlockY, BlockZ)
-	-- If they don't have the edits.build permission, don't let them build and send this failure message.
-	if not Player:HasPermission("basics.build") then
+	-- If they don't have the basics.architect.build permission, don't let them build and send this failure message.
+	if not Player:HasPermission("basics.architect.build") then
 		SendMessageFailure(Player, cChatColor.LightGray .. "Couldn't build because you're not permitted.")
 		return true
 	end
 
-	-- If they don't have the edits.spawnprotect.bypass permission and they're in spawn, do the same thing.
-	if not Player:HasPermission("basics.spawnprotect.bypass") and IsInSpawn(BlockX, BlockY, BlockZ, Player:GetWorld():GetName()) then
+	-- If they don't have the basics.mod.build permission and they're in spawn, do the same thing.
+	if not Player:HasPermission("basics.mod.build") and IsInSpawn(BlockX, BlockY, BlockZ, Player:GetWorld():GetName()) then
 		SendMessageFailure(Player, cChatColor.LightGray .. "Couldn't build this close to spawn.")
 		return true
 	end
@@ -51,7 +51,7 @@ function OnPlayerPlacingBlock(Player, BlockX, BlockY, BlockZ, BlockFace, CursorX
 end
 
 function OnPlayerRightClick(Player, BlockX, BlockY, BlockZ, BlockFace, CursorX, CursorY, CursorZ)
-	if not Player:HasPermission("basics.spawnprotect.bypass") and IsInSpawn(BlockX, BlockY, BlockZ, Player:GetWorld():GetName()) then
+	if not Player:HasPermission("basics.mod.build") and IsInSpawn(BlockX, BlockY, BlockZ, Player:GetWorld():GetName()) then
 		local Block = Player:GetWorld():GetBlock(Vector3i(BlockX, BlockY, BlockZ))
 		if Block == E_BLOCK_GRASS or Block == E_BLOCK_DIRT then
 			if Player:GetEquippedItem():IsEmpty() then
@@ -65,7 +65,7 @@ function OnPlayerRightClick(Player, BlockX, BlockY, BlockZ, BlockFace, CursorX, 
 		end
 
 		-- Send the failure message.
-		SendMessageFailure(Player, cChatColor.LightGray .. "Couldn't build this close to spawn.")
+		SendMessageFailure(Player, "You can't build this close to spawn.")
 		return true
 	end
 end

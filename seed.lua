@@ -8,7 +8,7 @@ function HandleSeedCommand(Split, Player)
 		local World = cRoot:Get():GetWorld(Split[2])
 		local WorldName = Split[2]
 		if not(World) then
-			Player:SendMessage(cChatColor.LightGray .. "Couldn't find that world.")
+			Player:SendMessageFailure("Could not find that world (" .. WorldName .. "), did you use Caps?")
 		else
 			Player:SendMessage(cChatColor.LightGray .. "Seed (" .. WorldName .. "): " .. World:GetSeed())
 		end
@@ -23,7 +23,7 @@ function HandleConsoleSeed(Split)
 		local World = cRoot:Get():GetWorld(Split[2])
 		local WorldName = Split[2]
 		if not(World) then
-			return true, "Couldn't find that world."
+			return true, "Could not find that world, did you use Caps?"
 		else
 			return true, "Seed (" .. WorldName .. "): " .. World:GetSeed()
 		end

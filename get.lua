@@ -7,19 +7,19 @@ local ItemBlackList = {}
 local CommandUsage = "Usage: %s %s"
 local GetCommandUsageTail = "<item> [amount] [data] [datatag]"
 
-local MessagePlayerFailure = "Couldn't find that player."
+local MessagePlayerFailure = "Could not find that player, are they online?"
 local MessageAmountFailure = "Couldn't get you an amount over the limit of 64."
-local MessageItemNameFailure = "Couldn't find that item."
-local MessageDataTagFailure = "Couldn't quantify that data: "
-local MessageUnknownError = "Couldn't get you that item."
+local MessageItemNameFailure = "Could not find that item."
+local MessageDataTagFailure = "Could not quantify the data: "
+local MessageUnknownError = "Could not get you that item, are permissions set?"
 local MessageGiveSuccessful = "Got you some %s (%d)."
-local MessageBadAmount = "Couldn't get you a non-numeric amount."
-local MessageBadData = "Couldn't quantify non-numeric data."
+local MessageBadAmount = "Could not get you a non-numeric amount."
+local MessageBadData = "Could not quantify non-numeric data."
 
-local UnbalancedCurleyBracesFailure = "Couldn't parse because you're missing curlies."
-local UnbalancedSquareBracketsFailure = "Couldn't parse because you're missing brackets."
-local StartWithBraceFailure = "Couldn't parse because you're missing curlies."
-local EndWithBraceFailure = "Couldn't parse because you're missing curlies."
+local UnbalancedCurleyBracesFailure = "Could not parse the data (UnbalancedCurleyBracesFailure)."
+local UnbalancedSquareBracketsFailure = "Could not parse the data (UnbalancedSquareBracketsFailure)."
+local StartWithBraceFailure = "Could not parse the data (StartWithBraceFailure)."
+local EndWithBraceFailure = "Could not parse the data (EndWithBraceFailure)."
 
 local BlackListHeaderComment = "# Contains the list of items that cannot be obtained through the get command.\n"
 local BlackListHeaderComment2 = "# Add items to this file to add them to the blacklist.\n"
@@ -131,7 +131,7 @@ local function GiveItemCommand(Split, Player, SafeCommand)
 	-- Make sure the amount is numeric.
 	if Split[4] and not tonumber(Split[4]) then
 		if Player then
-			SendMessage(Player, cChatColor.LightGray .. MessageBadAmount)
+			SendMessageFailure(Player, MessageBadAmount)
 		else
 			LOG(MessageBadAmount)
 		end
@@ -141,7 +141,7 @@ local function GiveItemCommand(Split, Player, SafeCommand)
 	-- Make sure the data value, if any, is numeric.
 	if Split[5] and not tonumber(Split[5]) then
 		if Player then
-			SendMessage(Player, cChatColor.LightGray .. MessageBadData)
+			SendMessageFailure(Player, MessageBadData)
 		else
 			LOG(MessageBadData)
 		end
@@ -171,7 +171,7 @@ local function GiveItemCommand(Split, Player, SafeCommand)
 	if not FoundItem then
 		local Message = string.format(MessageItemNameFailure, ItemName)
 		if Player then
-			SendMessage(Player, cChatColor.LightGray .. Message)
+			SendMessageFailure(Player, Message)
 		else
 			LOG(Message)
 		end
@@ -184,7 +184,7 @@ local function GiveItemCommand(Split, Player, SafeCommand)
 		if not DataTagTable then
 			local Message = string.format("%s%s", MessageDataTagFailure, errMsg or MessageUnknownError)
 			if Player then
-				SendMessage(Player, cChatColor.LightGray .. Message)
+				SendMessageFailure(Player, Message)
 			else
 				LOG(Message)
 			end
@@ -211,7 +211,7 @@ local function GiveItemCommand(Split, Player, SafeCommand)
 	if Amount > MaxNumberOfItems then
 		local Message = string.format(MessageAmountFailure, Amount)
 		if Player then
-			SendMessage(Player, cChatColor.LightGray .. Message)
+			SendMessageFailure(Player, Message)
 		else
 			LOG(Message)
 		end
@@ -226,7 +226,7 @@ local function GiveItemCommand(Split, Player, SafeCommand)
         NewPlayer:GetInventory():AddItem(Item)
 		local MessageHead = string.format(MessageGiveSuccessful, ((Item.m_CustomName ~= "") and Item.m_CustomName or ItemToString(Item)), Amount)
 		-- local MessageTail = " to " .. NewPlayer:GetName()
-		SendMessage(NewPlayer, cChatColor.LightGray .. MessageHead)
+		SendMessageSuccess(NewPlayer, MessageHead)
 		-- if Player and NewPlayer:GetName() ~= Player:GetName() then
 		-- 	SendMessageSuccess( Player, MessageHead .. MessageTail )
 		-- end
@@ -238,7 +238,7 @@ local function GiveItemCommand(Split, Player, SafeCommand)
 	-- Check to make sure that giving items was successful.
 	if not cRoot:Get():FindAndDoWithPlayer(PlayerName, giveItems) then
 		if Player then
-			SendMessage(Player, cChatColor.LightGray .. MessagePlayerFailure)
+			SendMessageFailure(Player, MessagePlayerFailure)
 		else
 			LOG(MessagePlayerFailure)
 		end

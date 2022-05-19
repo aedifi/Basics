@@ -7,11 +7,11 @@ function HandleSpyCommand(Split, Player)
 	if Split[2] == "commands" then
 		-- Add that player's identifier to the list.
 		CommandSpyList[Player:GetUUID()] = true
-		Player:SendMessage(cChatColor.LightGray .. "Started spying on players' commands.")
+		Player:SendMessageSuccess("Enabled spying on players' commands.")
 	elseif Split[2] == "stop" then
 		-- If they disable the feature, remove their identifier from the list.
 		CommandSpyList[Player:GetUUID()] = nil
-		Player:SendMessage(cChatColor.LightGray .. "Gave up your role as a spy (or did we?)")		
+		Player:SendMessageFailure("Disabled spying on players' commands.")		
 	else
 		Player:SendMessage(cChatColor.LightGray .. "Usage: " .. Split[1] .. " <commands | stop>")
 	end

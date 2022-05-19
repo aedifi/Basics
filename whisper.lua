@@ -11,7 +11,7 @@ function HandleWhisperCommand(Split, Player)
 		if (OtherPlayer:GetName() == Split[2]) then
 			local newSplit = table.concat(Split, " ", 3)
 			-- Notify them that the message was sent successfully.
-			SendMessage(Player, cChatColor.LightGray .. "Sent a message to " .. Split[2] .. ".")
+			SendMessageSuccess(Player, "Sent a message to " .. Split[2] .. ".")
 			OtherPlayer:SendMessagePrivateMsg(newSplit, Player:GetName())
 			lastsender[OtherPlayer:GetName()] = Player:GetName()
 			FoundPlayer = true
@@ -21,7 +21,7 @@ function HandleWhisperCommand(Split, Player)
 	-- If that player couldn't be found, display an error.
 	if not FoundPlayer then
 		-- Tell them.
-		SendMessage(Player, cChatColor.LightGray .. "Couldn't find that player.")
+		SendMessageFailure(Player, "Could not find that player, are they online?")
 	end
 	return true
 end
@@ -33,7 +33,7 @@ function HandleReplyCommand(Split, Player)
         local SendMessage = function(OtherPlayer)
             if (OtherPlayer:GetName() == lastsender[Player:GetName()]) then
                 local newSplit = table.concat(Split, " ", 2)
-                Player:SendMessage(cChatColor.LightGray .. "Sent a message to " .. lastsender[Player:GetName()] .. ".")
+                Player:SendMessageSuccess(cChatColor.LightGray .. "Sent a message to " .. lastsender[Player:GetName()] .. ".")
                 OtherPlayer:SendMessagePrivateMsg(newSplit, Player:GetName())
                 lastsender[OtherPlayer:GetName()] = Player:GetName()
                 return true
@@ -41,11 +41,11 @@ function HandleReplyCommand(Split, Player)
         end
 	-- If there isn't anybody to which they may reply, display an error.
         if lastsender[Player:GetName()] == nil then
-            Player:SendMessage(cChatColor.LightGray .. "Couldn't find any previous sender.")
+            Player:SendMessageFailure(cChatColor.LightGray .. "Could not find a previous sender.")
         else
 	    -- If that player couldn't be found, display an error.
             if (not(cRoot:Get():FindAndDoWithPlayer(lastsender[Player:GetName()], SendMessage))) then
-                Player:SendMessage(cChatColor.LightGray .. "Couldn't find that player.")
+                Player:SendMessageFailure(cChatColor.LightGray .. "Could not find that player, are they online?")
             end
         end
     end

@@ -35,7 +35,7 @@ function HandleWeatherCommand(Split, Player)
 	if not Weather then
 		Response = SendMessage(Player, cChatColor.LightGray .. "Usage: " .. Split[1] .. " <sunny | rainy | stormy> [ticks] [world]")
 	elseif not World then
-		Response = SendMessage(Player, cChatColor.LightGray .. "Couldn't find that world.")
+		Response = SendMessageFailure(Player, "Couldn't find that world (" .. WorldName .. "), did you use Caps?")
 	else
 		World:SetWeather(Weather)
 
@@ -43,7 +43,7 @@ function HandleWeatherCommand(Split, Player)
 			World:SetTicksUntilWeatherChange(TicksToChange)
 		end
 		
-		Response = SendMessage(Player, cChatColor.LightGray .. WeatherChanges[Weather])
+		Response = SendMessageSuccess(Player, WeatherChanges[Weather])
 	end
 	return true, Response
 end

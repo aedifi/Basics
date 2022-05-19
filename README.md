@@ -28,7 +28,8 @@ By default server configuration, these commands are granted to architects.
 | ------- | ---------- | ----------- |
 | `/clear [player]` | `basics.clear` `basics.clear.others` | Clears a player's inventory. |
 | `/get <item> [amount] [data] [datatag]` | `basics.get` | Gets an item for you with optional data. |
-| `/goto <player> (or) /goto <x> <y> <z> (or) /goto rand` | Takes you to any player, coordinates, or to a random location. |
+| `/goto <player> (or) /goto <x> <y> <z> (or) /goto rand` | `basics.goto` | Takes you to any player, coordinates, or to a random location. |
+| `/item` | `basics.item` | Displays the information of an item you're holding.. |
 | `/mode <creative \| spectator> [player]` | `basics.mode` | Changes a player's gamemode. |
 | `/summon <entity> [x] [y] [z]` | `basics.summon` | Summons an entity. |
 | `/time <day \| night \| value> [world]` | `basics.time` | Changes the world's time. |
@@ -39,7 +40,6 @@ By default server configuration, these commands are granted to moderators.
 | Usage | Permission(s) | Description |
 | ------- | ---------- | ----------- |
 | `/ban <player> [reason]` | `basics.ban` | Bans a player. |
-| `/discretion <watching \| ignoring>` | `baiscs.discretion` | Changes if you're watching everybody's commands. |
 | `/kick <player> [reason]` | `basics.kick` | Kicks a player. |
 | `/pardon <player> [reason]` | `basics.pardon` | Pardons a player. |
 | `/regen <x> <z>` | `basics.regen` | Regenerates a specific chunk. |
@@ -53,4 +53,5 @@ By default server configuration, these commands are granted to administrators.
 | Usage | Permission(s) | Description |
 | ------- | ---------- | ----------- |
 | `/assign <player> [rank]` | `basics.assign` | Displays or assigns a player's rank. |
-| `/sudo [<x> <y> <z>]` | `basics.sudo` | Executes a command block with superuser privileges. |
+| `/execute [<x> <y> <z>]` | `basics.execute` | Executes a command block with superuser privileges. |
+| `/sudo <player> <command [...]>` | `basics.sudo` | Executes a command as another player. |
